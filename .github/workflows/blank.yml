@@ -1,0 +1,13 @@
+VirtualPC/
+├── .gitignore
+├── README.md
+├── build.bat
+├── scripts/
+│   └── build.ps1
+└── VirtualPC/
+    ├── VirtualPC.csproj
+    ├── Program.cs
+    ├── MainForm.cs
+    ├── QemuManager.cs
+    ├── VmConfig.cs
+    └── app.manifest
