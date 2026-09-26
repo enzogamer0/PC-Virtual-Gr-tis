@@ -1,0 +1,51 @@
+git clone https://github.com
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdint.h>
+
+// Registradores do PC Virtual
+enum { R_R0 = 0, R_R1, R_R2, R_R3, R_R4, R_R5, R_R6, R_R7, R_PC, R_COND, R_COUNT };
+uint16_t reg[R_COUNT];
+
+// Memória (65536 posições de 16 bits)
+uint16_t memory[UINT16_MAX];
+
+// Opcodes de Instrução fictícios para o exemplo
+enum { OP_BR = 0, OP_ADD, OP_LD, OP_ST, OP_JSR, OP_AND, OP_LDR, OP_STR, OP_RTI, OP_NOT };
+
+int main(int argc, const char* argv[]) {
+    // Configura o Program Counter (PC) inicial
+    reg[R_PC] = 0x3000;
+    
+    int running = 1;
+    printf("PC Virtual inicializado com sucesso.\n");
+
+    while (running) {
+        // FETCH: Busca a instrução na memória
+        uint16_t instruction = memory[reg[R_PC]++];
+        
+        // DECODE: Descobre qual é a operação (primeiros 4 bits)
+        uint16_t op = instruction >> 12;
+
+        // EXECUTE: Executa a operação baseada no opcode
+        switch (op) {
+            case OP_ADD:
+                printf("Executando instrução de SOMA (ADD)\n");
+                // Lógica de soma aqui
+                break;
+            case OP_NOT:
+                printf("Executando instrução de inversão (NOT)\n");
+                break;
+            default:
+                // Finaliza o loop se encontrar instrução desconhecida
+                running = 0;
+                break;
+        }
+    }
+    printf("PC Virtual desligado.\n");
+    return 0;
+}
+gcc main.c -o pcvirtual
+./pcvirtual
+gcc main.c -o pcvirtual.exe
+pcvirtual.exe
